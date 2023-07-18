@@ -9,14 +9,14 @@ import {
   Modal,
   Box,
   IconButton,
-} from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import React, { useState, useEffect } from "react";
-import "./Home.css";
-import * as PlaylistManagement from "../../roots/GetData";
+} from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import React, { useState, useEffect } from 'react';
+import './Home.css';
+import * as PlaylistManagement from '../../roots/GetData';
 
-function Home(songData: any) {
+function Home(searchCriteria: any) {
   const [data, setData] = useState<any>(null);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [id, setID] = useState<any>(null);
@@ -25,19 +25,18 @@ function Home(songData: any) {
   useEffect(() => {
     const getPlaylistData = async () => {
       try {
-        //!----HINT HINT HINT------!//
-        //!----These variable names are shocking - take some time and find out some better alternatives that should be used------!//
-        //!----HINT HINT HINT------!//
-        const thingy = await PlaylistManagement.GET_SEARCH(songData.songData);
-        const thiny2 = await thingy.json();
-        setData(thiny2);
+        const getSongData = await PlaylistManagement.GET_SEARCH(
+          searchCriteria.songData
+        );
+        const songData = await getSongData.json();
+        setData(songData);
       } catch (e) {
         console.log(e);
       }
     };
 
     getPlaylistData();
-  }, [songData, favourites]);
+  }, [searchCriteria, favourites]);
 
   const handleFavourite = (id: string) => {
     console.log(id);
@@ -51,10 +50,14 @@ function Home(songData: any) {
     }
   };
 
-  //!----HINT HINT HINT------!//
-  //!----Create a function to change the songs duration into minutes and seconds here p.s. stackoverflow will help here massively ------!//
-  //!----HINT HINT HINT------!//
-
+  const secondsToMinutes = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time - minutes * 60;
+    const str_pad_left = (string: number, pad: string, length: number) => {
+      return (new Array(length + 1).join(pad) + string).slice(-length);
+    };
+    return str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);
+  };
   const listItems = data?.data.map(({ id, artist, album, title }: any) => (
     <Card
       key={id}
@@ -68,7 +71,7 @@ function Home(songData: any) {
       // }}
     >
       <div className="learn-more-button">
-        <Button size="medium" sx={{ color: "#fff" }}>
+        <Button size="medium" sx={{ color: '#fff' }}>
           Learn More
         </Button>
       </div>
@@ -94,7 +97,7 @@ function Home(songData: any) {
           {!favourites.includes(id) ? (
             <FavoriteBorderOutlinedIcon />
           ) : (
-            <FavoriteIcon sx={{ color: "#e91e63" }} />
+            <FavoriteIcon sx={{ color: '#e91e63' }} />
           )}
         </IconButton>
       </CardActions>
@@ -109,7 +112,7 @@ function Home(songData: any) {
             <div className="output">{listItems}</div>
           </>
         ) : (
-          "Loading..."
+          'Loading...'
         )}
 
         {openModal && id && (
@@ -137,7 +140,7 @@ function Home(songData: any) {
                     {!favourites.includes(id) ? (
                       <FavoriteBorderOutlinedIcon />
                     ) : (
-                      <FavoriteIcon sx={{ color: "#e91e63" }} />
+                      <FavoriteIcon sx={{ color: '#e91e63' }} />
                     )}
                   </IconButton>
                 </div>

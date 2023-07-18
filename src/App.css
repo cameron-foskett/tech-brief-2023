@@ -11,8 +11,8 @@
 }
 
 .individual_card {
-  display: "block";
-  height: "24vw";
+  display: 'block';
+  height: '24vw';
 }
 
 .nav-active {
@@ -37,7 +37,7 @@
   height: 4rem;
   display: flex;
   align-items: center;
-  background-color: rgba(226, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
   margin: 0em 10em 2em 10em;
   padding: 1em;
   border-radius: 16px;
@@ -49,11 +49,12 @@
 
 .full-page {
   padding: 1em;
+  background-color: #353535;
 }
 .header-links .link {
   display: inline-block;
   padding: 0 1.5rem 0 1rem;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif;
   font-size: 1.2rem;
   color: white;
   margin-right: 10px;

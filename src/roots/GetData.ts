@@ -1,10 +1,14 @@
-import React from "react";
+import React from 'react';
+if (!process.env.REACT_APP_API_KEY) {
+  throw 'API KEY undefined';
+}
+const API_KEY: string = process.env.REACT_APP_API_KEY;
 
 const options = {
-  method: "GET",
+  method: 'GET',
   headers: {
-    "X-RapidAPI-Key": "",
-    "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
+    'X-RapidAPI-Key': API_KEY,
+    'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com',
   },
 };
 

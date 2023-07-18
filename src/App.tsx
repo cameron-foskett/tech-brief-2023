@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import "./App.css";
-import Home from "./pages/Home/Home";
-import Favourites from "./pages/Favourites/Favourites";
-import { BrowserRouter, NavLink, Routes, Route } from "react-router-dom";
-import { InputAdornment, TextField } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import React, { useState } from 'react';
+import './App.css';
+import Home from './pages/Home/Home';
+import Favourites from './pages/Favourites/Favourites';
+import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
+import { InputAdornment, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function App() {
   //!----HINT HINT HINT------!//
   //!----Change the string below to your favourite artist------!//
   //!----HINT HINT HINT------!//
-  const [searchCriteria, setSearchCriteria] = useState<string>("ARTIST");
+  const [searchCriteria, setSearchCriteria] = useState<string>('ARTIST');
 
   const handleSearch = (search: string) => {
-    if (search === "") setSearchCriteria("artist");
+    if (search === '') setSearchCriteria('artist');
     else setSearchCriteria(search);
   };
 
@@ -30,7 +30,7 @@ export default function App() {
               className="link"
               to=""
               style={({ isActive }) => ({
-                textDecoration: isActive ? "underline" : "none",
+                textDecoration: isActive ? 'underline' : 'none',
               })}
             >
               Home
@@ -39,7 +39,7 @@ export default function App() {
               className="link"
               to="favourites"
               style={({ isActive }) => ({
-                textDecoration: isActive ? "underline" : "none",
+                textDecoration: isActive ? 'underline' : 'none',
               })}
             >
               Favourites
@@ -62,7 +62,7 @@ export default function App() {
           </div>
         </div>
         <Routes>
-          <Route path="/" element={<Home songData={searchCriteria} />} />
+          <Route path="/" element={<Home searchCriteria={searchCriteria} />} />
           <Route path="favourites" element={<Favourites />} />
         </Routes>
       </BrowserRouter>
