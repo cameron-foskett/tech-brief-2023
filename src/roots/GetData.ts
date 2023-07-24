@@ -21,6 +21,15 @@ export const GET_PLAYLIST = async (id: string) => {
 ///https://rapidapi.com/deezerdevs/api/deezer-1------!//
 //!----HINT HINT HINT------!//
 
+export const GET_TRACK = async (id: string) => {
+  const response = await fetch(
+    `https://deezerdevs-deezer.p.rapidapi.com/track/${id}`,
+    options
+  );
+
+  return response;
+};
+
 export const GET_SEARCH = async (search: string) => {
   const response = await fetch(
     `https://deezerdevs-deezer.p.rapidapi.com/search?q=${search}`,
