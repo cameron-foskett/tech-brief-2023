@@ -3,7 +3,7 @@ import React from "react";
 const options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": "",
+    "X-RapidAPI-Key": "f32b9f178emsh6bf1b665906256dp179411jsn978853728dc2",
     "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
   },
 };

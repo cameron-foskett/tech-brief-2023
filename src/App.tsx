@@ -7,10 +7,7 @@ import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 export default function App() {
-  //!----HINT HINT HINT------!//
-  //!----Change the string below to your favourite artist------!//
-  //!----HINT HINT HINT------!//
-  const [searchCriteria, setSearchCriteria] = useState<string>("ARTIST");
+  const [searchCriteria, setSearchCriteria] = useState<string>("Taylor Swift");
 
   const handleSearch = (search: string) => {
     if (search === "") setSearchCriteria("artist");
@@ -31,6 +28,7 @@ export default function App() {
               to=""
               style={({ isActive }) => ({
                 textDecoration: isActive ? "underline" : "none",
+                fontWeight: isActive ? "bold" : "normal",
               })}
             >
               Home
@@ -40,6 +38,7 @@ export default function App() {
               to="favourites"
               style={({ isActive }) => ({
                 textDecoration: isActive ? "underline" : "none",
+                fontWeight: isActive ? "bold" : "normal",
               })}
             >
               Favourites
@@ -51,13 +50,13 @@ export default function App() {
               label="Search"
               onChange={(e) => handleSearch(e.currentTarget.value)}
               InputProps={{
-                startAdornment: (
+                endAdornment: (
                   <InputAdornment position="end">
                     <SearchIcon />
                   </InputAdornment>
                 ),
               }}
-              variant="standard"
+              variant="outlined"
             />
           </div>
         </div>

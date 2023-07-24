@@ -1,3 +1,11 @@
+h5 {
+  color: #fff !important;
+  font-family: Oswald !important;
+  font-size: 32px !important;
+  font-style: normal !important;
+  line-height: normal !important;
+}
+
 .song-modal {
   margin: 0 50%;
 }
@@ -13,7 +21,8 @@
 }
 
 .modal-image {
-  height: 50%;
+  height: 20%;
+  border-radius: 16px;
 }
 .modal-text {
   width: 90%;

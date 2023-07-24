@@ -25,12 +25,11 @@ function Home(songData: any) {
   useEffect(() => {
     const getPlaylistData = async () => {
       try {
-        //!----HINT HINT HINT------!//
-        //!----These variable names are shocking - take some time and find out some better alternatives that should be used------!//
-        //!----HINT HINT HINT------!//
-        const thingy = await PlaylistManagement.GET_SEARCH(songData.songData);
-        const thiny2 = await thingy.json();
-        setData(thiny2);
+        const getSongData = await PlaylistManagement.GET_SEARCH(
+          songData.songData
+        );
+        const waitSongData = await getSongData.json();
+        setData(waitSongData);
       } catch (e) {
         console.log(e);
       }
@@ -51,15 +50,30 @@ function Home(songData: any) {
     }
   };
 
+  const helper = data?.data.map(({ id, artist, album, title }: any) => {
+    console.log();
+  });
+
+  helper;
+
   //!----HINT HINT HINT------!//
   //!----Create a function to change the songs duration into minutes and seconds here p.s. stackoverflow will help here massively ------!//
   //!----HINT HINT HINT------!//
+
+  const changeTime = (duration: number) => {
+    let minutes = Math.floor(duration / 60);
+    let seconds = duration % 60;
+    function padTo2Digits(num: any) {
+      return num.toString().padStart(2, "0");
+    }
+    const result = `${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`;
+    return result;
+  };
 
   const listItems = data?.data.map(({ id, artist, album, title }: any) => (
     <Card
       key={id}
       className="custom-card"
-
       //!----HINT HINT HINT------!//
       //!----These inline stylings can be useful for certain parts of the code - try adding a hover css to apply shadow changes------!//
       //!----HINT HINT HINT------!//
@@ -67,16 +81,17 @@ function Home(songData: any) {
       //   maxHeight: 405,
       // }}
     >
+      {/* {console.log(album)} */}
       <div className="learn-more-button">
         <Button size="medium" sx={{ color: "#fff" }}>
           Learn More
         </Button>
       </div>
       <CardMedia
-        sx={{ height: 240 }}
-        //!----HINT HINT HINT------!//
-        //!----Check the docs of materialUI to see how CardMedia interacts and uses images------!//
-        //!----HINT HINT HINT------!//
+        sx={{ height: "20%", borderRadius: "16px" }}
+        component="img"
+        alt={"Album Cover for " + album.title}
+        image={album.cover_xl}
         title={artist.name}
       />
       <CardContent sx={{ height: 30 }}>

@@ -22,10 +22,10 @@
 
 .title {
   text-transform: capitalize;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 1.8rem;
+  font-family: Oswald;
+  font-size: 1.6rem;
   font-weight: bold;
-  margin-right: 1em;
+  margin-right: 4em;
   color: white;
   flex-direction: column;
   display: flex;
@@ -33,13 +33,13 @@
 .header {
   position: fixed;
   z-index: 100;
-  width: 80%;
+  width: 94%;
   height: 4rem;
   display: flex;
   align-items: center;
-  background-color: rgba(226, 0, 0, 0.2);
-  margin: 0em 10em 2em 10em;
-  padding: 1em;
+  background-color: #ffffff10;
+  margin: 0em 2em 2em 0em;
+  padding: 1em 1em 1em 2em;
   border-radius: 16px;
 }
 
@@ -49,6 +49,7 @@
 
 .full-page {
   padding: 1em;
+  background-color: #353535;
 }
 .header-links .link {
   display: inline-block;
@@ -58,7 +59,7 @@
   color: white;
   margin-right: 10px;
   text-decoration-color: #eb0573 !important;
-  text-underline-offset: 1vh;
+  text-underline-offset: 2vh;
   text-decoration-thickness: 3px !important;
 }
 .searchBar {
@@ -66,6 +67,11 @@
   position: absolute;
   margin-right: 4vw;
 }
+
+.Mui-outlinedInput {
+  border-color: #ffffff;
+}
+
 .css-i4bv87-MuiSvgIcon-root,
 .css-1c2i806-MuiFormLabel-root-MuiInputLabel-root,
 .css-1x51dt5-MuiInputBase-input-MuiInput-input {
@@ -74,3 +80,9 @@
 .css-v4u5dn-MuiInputBase-root-MuiInput-root:after {
   border-bottom: 2px solid #ffffff !important;
 }
+
+.css-bhp9pd-MuiPaper-root-MuiCard-root {
+  padding-top: 4rem;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
