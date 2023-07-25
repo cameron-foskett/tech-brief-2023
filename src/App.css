@@ -1,18 +1,21 @@
 .output {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 20px;
-  align-items: center;
-  width: 60%;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  grid-gap: 1vw;
+  /* align-items: center; */
+  /* width: 60%; */
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  text-align: center;
+
+  /* text-align: center; */
   margin-top: 10vh;
 }
 
 .individual_card {
-  display: "block";
+  display: flex;
   height: "24vw";
+  border-radius: 16px;
 }
 
 .nav-active {
@@ -24,7 +27,7 @@
   text-transform: capitalize;
   font-family: Oswald;
   font-size: 1.6rem;
-  font-weight: bold;
+  font-weight: 800;
   margin-right: 4em;
   color: white;
   flex-direction: column;
@@ -32,6 +35,7 @@
 }
 .header {
   position: fixed;
+  font-family: Oswald;
   z-index: 100;
   width: 94%;
   height: 4rem;
@@ -54,12 +58,12 @@
 .header-links .link {
   display: inline-block;
   padding: 0 1.5rem 0 1rem;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Roboto, Geneva, Tahoma, sans-serif;
   font-size: 1.2rem;
   color: white;
   margin-right: 10px;
   text-decoration-color: #eb0573 !important;
-  text-underline-offset: 2vh;
+  text-underline-offset: 8px;
   text-decoration-thickness: 3px !important;
 }
 .searchBar {
@@ -70,6 +74,7 @@
 
 .Mui-outlinedInput {
   border-color: #ffffff;
+  position: fixed;
 }
 
 .css-i4bv87-MuiSvgIcon-root,

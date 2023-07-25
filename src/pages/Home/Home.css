@@ -6,15 +6,16 @@ h5 {
   line-height: normal !important;
 }
 
+.output {
+  width: 100%;
+}
 .song-modal {
   margin: 0 50%;
 }
 
 .modal-content {
   position: absolute;
-  width: 20vw;
   height: 70vh;
-  background-color: red;
   border: 2px solid #000;
   display: flex;
   flex-direction: column;
@@ -37,13 +38,16 @@ h5 {
   margin: 3vh 0 0 0 !important;
 }
 .custom-card {
-  background-color: #353535 !important;
+  /* background-color: #353535 !important; */
+  font-family: Oswald !important;
+  font-weight: 700 !important;
+  font-size: 32px !important;
   color: white !important;
 }
 .learn-more-button {
-  display: none;
   background-color: #eb0573;
-  margin: 6em -3em -3em;
+  padding: 0em 48px;
+  margin: 4.5em 1.75em;
   position: absolute;
 }
 .modal-modal-description {
@@ -67,4 +71,23 @@ h5 {
 .title_favourite,
 .card-content {
   display: flex;
+  flex-direction: row;
+  .title_favourite {
+    flex: 1 0 0;
+  }
+}
+
+.css-h93ljk-MuiTypography-root {
+  font-family: Oswald !important;
+  font-weight: 700 !important;
+  font-size: 32px !important;
+  color: white !important;
+}
+.css-e784if-MuiTypography-root {
+  color: #fff !important;
+  font-size: 16px !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: normal !important;
+  opacity: 0.5 !important;
 }

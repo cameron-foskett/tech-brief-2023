@@ -15,12 +15,16 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import React, { useState, useEffect } from "react";
 import "./Home.css";
 import * as PlaylistManagement from "../../roots/GetData";
+import { hover } from "@testing-library/user-event/dist/hover";
 
 function Home(songData: any) {
   const [data, setData] = useState<any>(null);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [id, setID] = useState<any>(null);
   const [favourites, setFavourites] = useState<string[]>([]);
+  const [hoverOnImage, setHoverOnImage] = useState<{ [key: string]: boolean }>(
+    {}
+  );
 
   useEffect(() => {
     const getPlaylistData = async () => {
@@ -38,8 +42,20 @@ function Home(songData: any) {
     getPlaylistData();
   }, [songData, favourites]);
 
+  useEffect(() => {
+    const getTrackData = async () => {
+      try {
+        const getTrackData = await PlaylistManagement.GET_TRACK(id);
+        const waitTrackData = await getTrackData.json();
+        setID(waitTrackData);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getTrackData();
+  }, [id]);
+
   const handleFavourite = (id: string) => {
-    console.log(id);
     if (favourites.includes(id)) {
       let temp = favourites.filter((val: string) => {
         return val !== id;
@@ -51,9 +67,8 @@ function Home(songData: any) {
   };
 
   const helper = data?.data.map(({ id, artist, album, title }: any) => {
-    console.log();
+    console.log(id);
   });
-
   helper;
 
   //!----HINT HINT HINT------!//
@@ -74,33 +89,54 @@ function Home(songData: any) {
     <Card
       key={id}
       className="custom-card"
+      onMouseEnter={() => {
+        setHoverOnImage((prevState) => ({ ...prevState, [id]: true }));
+      }}
+      onMouseLeave={() => {
+        setHoverOnImage((prevState) => ({ ...prevState, [id]: false }));
+      }}
+      onClick={() => {
+        setID(`${id}`);
+        setOpenModal(true);
+      }}
       //!----HINT HINT HINT------!//
       //!----These inline stylings can be useful for certain parts of the code - try adding a hover css to apply shadow changes------!//
       //!----HINT HINT HINT------!//
-      // sx={{
-      //   maxHeight: 405,
-      // }}
+      sx={{
+        maxHeight: 480,
+        boxShadow: "none",
+        backgroundColor: `${
+          hoverOnImage[id] ? "rgba(225,225,225,0.1)" : "#353535 !important"
+        }`,
+      }}
     >
-      {/* {console.log(album)} */}
       <div className="learn-more-button">
-        <Button size="medium" sx={{ color: "#fff" }}>
+        <Button
+          size="medium"
+          sx={{
+            color: "#fff",
+            display: `${hoverOnImage[id] ? "show" : "none"}`,
+          }}
+        >
           Learn More
         </Button>
       </div>
       <CardMedia
-        sx={{ height: "20%", borderRadius: "16px" }}
+        sx={{ height: "330px", width: "auto", borderRadius: "16px" }}
         component="img"
         alt={"Album Cover for " + album.title}
         image={album.cover_xl}
         title={artist.name}
       />
-      <CardContent sx={{ height: 30 }}>
+      <CardContent sx={{ height: "auto" }}>
         <Typography gutterBottom variant="h5" component="div">
           {title}
         </Typography>
         <Typography variant="body2">{artist.name}</Typography>
       </CardContent>
-      <CardActions sx={{ height: 105, paddingTop: 3 }}>
+      <CardActions
+        sx={{ height: 0, paddingTop: 0, alignItems: "right", width: "330px" }}
+      >
         <IconButton
           aria-label="add to favorites"
           className="card-icon"
