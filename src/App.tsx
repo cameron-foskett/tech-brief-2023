@@ -1,23 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Home from './pages/Home/Home';
 import Favourites from './pages/Favourites/Favourites';
 import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
-import { InputAdornment, TextField } from '@mui/material';
+import { Input, Paper } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function App() {
+  const [query, setQuery] = useState<string>('');
   const [searchCriteria, setSearchCriteria] = useState<string>('axel f');
-
-  const handleSearch = (search: string) => {
-    if (search === '') setSearchCriteria('artist');
-    else setSearchCriteria(search);
-  };
+  useEffect(() => {
+    const timeOutId = setTimeout(
+      () => setSearchCriteria(query === '' ? 'artist' : query),
+      500
+    );
+    return () => clearTimeout(timeOutId);
+  }, [query]);
 
   return (
     <div className="full-page">
       <link
         href="https://fonts.googleapis.com/css?family=Oswald"
+        rel="stylesheet"
+      />
+      <link
+        href="https://fonts.googleapis.com/css?family=Roboto"
         rel="stylesheet"
       />
       <BrowserRouter>
@@ -47,19 +54,42 @@ export default function App() {
             </NavLink>
           </nav>
           <div className="searchBar">
-            <TextField
-              id=""
-              label="Search"
-              onChange={(e) => handleSearch(e.currentTarget.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="end">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
+            <Paper
+              component="form"
+              sx={{
+                p: '15px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: '306px',
+                borderRadius: '8px',
+                backgroundColor: 'rgba(255, 255, 255, 0.10)',
               }}
-              variant="standard"
-            />
+            >
+              <Input
+                sx={{
+                  ml: 1,
+                  flex: 1,
+                  '& ::placeholder': {
+                    color: 'rgba(255,255,255,0.5)',
+                    fontSize: '16px',
+                    fontFamily: 'Roboto',
+                  },
+                }}
+                disableUnderline
+                placeholder="Search"
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={(e) => setQuery(e.currentTarget.value)}
+              />
+
+              <SearchIcon
+                sx={{
+                  fillOpacity: 0.3,
+                  fill: 'var(--transparent, #FFF)',
+                  backgroundBlendMode: 'multiply',
+                }}
+              />
+            </Paper>
           </div>
         </div>
         <Routes>

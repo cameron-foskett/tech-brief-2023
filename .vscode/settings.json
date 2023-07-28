@@ -1,5 +1,6 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "cSpell.words": ["favourite", "Favourite", "favourites", "Favourites"]
+  "cSpell.words": ["favourite", "Favourite", "favourites", "Favourites"],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

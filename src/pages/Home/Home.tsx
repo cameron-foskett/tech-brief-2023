@@ -5,10 +5,10 @@ import {
   Typography,
   CardActions,
   Button,
-  TextField,
   Modal,
   Box,
   IconButton,
+  CircularProgress,
 } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CloseIcon from '@mui/icons-material/Close';
@@ -79,24 +79,29 @@ const Home: React.FunctionComponent<HomeProps> = ({ searchCriteria }) => {
     return str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);
   };
   console.log('data', data);
-  // @ts-ignore
-  const groupBy = (x, f) =>
-    // @ts-ignore
-    x.reduce((a, b, i) => ((a[f(b, i, x)] ||= []).push(b), a), {});
+
+  type GroupedResult<T> = { [key: string]: T[] };
+
+  const groupBy = <T extends unknown>(
+    array: T[],
+    predicate: (value: T, index: number, array: T[]) => string
+  ): GroupedResult<T> =>
+    array.reduce((acc, value, index, array) => {
+      const key = predicate(value, index, array);
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(value);
+      return acc;
+    }, {} as GroupedResult<T>);
 
   useEffect(() => {
     if (!data) return;
-    // @ts-ignore
-    const groupedArtistData = groupBy(data.data, (track) => track.artist.name);
-    console.log('filter', groupedArtistData);
+    const groupedArtistData = groupBy(
+      data.data,
+      (track: any) => track.artist.name
+    );
     setGroupedArtistData(groupedArtistData);
-
-    Object.entries(groupedArtistData).map(([artist, tracks]: any) => {
-      console.log('art', artist);
-      tracks.map(({ id, artist, album, title }: any) => {
-        console.log('track', artist.name);
-      });
-    });
   }, [data]);
 
   return (
@@ -184,7 +189,7 @@ const Home: React.FunctionComponent<HomeProps> = ({ searchCriteria }) => {
           ))}
         </>
       ) : (
-        'Loading...'
+        <CircularProgress />
       )}
 
       {openModal && id && modalData && (
