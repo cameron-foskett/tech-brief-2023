@@ -7,10 +7,7 @@ import { InputAdornment, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function App() {
-  //!----HINT HINT HINT------!//
-  //!----Change the string below to your favourite artist------!//
-  //!----HINT HINT HINT------!//
-  const [searchCriteria, setSearchCriteria] = useState<string>('ARTIST');
+  const [searchCriteria, setSearchCriteria] = useState<string>('axel f');
 
   const handleSearch = (search: string) => {
     if (search === '') setSearchCriteria('artist');
@@ -19,6 +16,10 @@ export default function App() {
 
   return (
     <div className="full-page">
+      <link
+        href="https://fonts.googleapis.com/css?family=Oswald"
+        rel="stylesheet"
+      />
       <BrowserRouter>
         <div className="header">
           <div className="title">

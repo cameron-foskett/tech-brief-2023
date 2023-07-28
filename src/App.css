@@ -1,13 +1,12 @@
 .output {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(314px, 1fr));
+  grid-gap: 24px;
   align-items: center;
-  width: 60%;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
-  text-align: center;
-  margin-top: 10vh;
+  /* margin-top: 32vh; */
 }
 
 .individual_card {
@@ -22,7 +21,7 @@
 
 .title {
   text-transform: capitalize;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Oswald, Verdana, Geneva, Tahoma, sans-serif;
   font-size: 1.8rem;
   font-weight: bold;
   margin-right: 1em;
@@ -33,12 +32,12 @@
 .header {
   position: fixed;
   z-index: 100;
-  width: 80%;
+  width: 96%;
   height: 4rem;
   display: flex;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.1);
-  margin: 0em 10em 2em 10em;
+  /* margin: 0em 10em 2em 10em; */
   padding: 1em;
   border-radius: 16px;
 }
@@ -54,7 +53,7 @@
 .header-links .link {
   display: inline-block;
   padding: 0 1.5rem 0 1rem;
-  font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Oswald, Roboto, Verdana, Geneva, Tahoma, sans-serif;
   font-size: 1.2rem;
   color: white;
   margin-right: 10px;
