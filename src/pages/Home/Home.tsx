@@ -15,7 +15,6 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import React, { useState, useEffect } from "react";
 import "./Home.css";
 import * as PlaylistManagement from "../../roots/GetData";
-import { hover } from "@testing-library/user-event/dist/hover";
 
 function Home(songData: any) {
   const [data, setData] = useState<any>(null);
@@ -24,6 +23,10 @@ function Home(songData: any) {
   const [favourites, setFavourites] = useState<string[]>([]);
   const [hoverOnImage, setHoverOnImage] = useState<{ [key: string]: boolean }>(
     {}
+  );
+  const [selectedCardID, setSelectedCardID] = useState<string | null>(null);
+  const selectedCard = data?.data.find(
+    (item: any) => item.id === selectedCardID
   );
 
   useEffect(() => {
@@ -45,15 +48,15 @@ function Home(songData: any) {
   useEffect(() => {
     const getTrackData = async () => {
       try {
-        const getTrackData = await PlaylistManagement.GET_TRACK(id);
+        const getTrackData = await PlaylistManagement.GET_TRACK(id.id);
         const waitTrackData = await getTrackData.json();
-        setID(waitTrackData);
+        setSelectedCardID(waitTrackData);
       } catch (e) {
         console.log(e);
       }
     };
     getTrackData();
-  }, [id]);
+  }, [selectedCardID]);
 
   const handleFavourite = (id: string) => {
     if (favourites.includes(id)) {
@@ -65,15 +68,6 @@ function Home(songData: any) {
       setFavourites((prevFavourites) => [...prevFavourites, id]);
     }
   };
-
-  const helper = data?.data.map(({ id, artist, album, title }: any) => {
-    console.log(id);
-  });
-  helper;
-
-  //!----HINT HINT HINT------!//
-  //!----Create a function to change the songs duration into minutes and seconds here p.s. stackoverflow will help here massively ------!//
-  //!----HINT HINT HINT------!//
 
   const changeTime = (duration: number) => {
     let minutes = Math.floor(duration / 60);
@@ -95,18 +89,13 @@ function Home(songData: any) {
       onMouseLeave={() => {
         setHoverOnImage((prevState) => ({ ...prevState, [id]: false }));
       }}
-      onClick={() => {
-        setID(`${id}`);
-        setOpenModal(true);
-      }}
-      //!----HINT HINT HINT------!//
-      //!----These inline stylings can be useful for certain parts of the code - try adding a hover css to apply shadow changes------!//
-      //!----HINT HINT HINT------!//
       sx={{
         maxHeight: 480,
+        width: "354px",
         boxShadow: "none",
+        padding: "12px",
         backgroundColor: `${
-          hoverOnImage[id] ? "rgba(225,225,225,0.1)" : "#353535 !important"
+          hoverOnImage[id] ? "rgba(225,225,225,0.1) !important" : "#353535"
         }`,
       }}
     >
@@ -116,6 +105,10 @@ function Home(songData: any) {
           sx={{
             color: "#fff",
             display: `${hoverOnImage[id] ? "show" : "none"}`,
+          }}
+          onClick={() => {
+            setSelectedCardID(id);
+            setOpenModal(true);
           }}
         >
           Learn More
@@ -128,27 +121,33 @@ function Home(songData: any) {
         image={album.cover_xl}
         title={artist.name}
       />
-      <CardContent sx={{ height: "auto" }}>
-        <Typography gutterBottom variant="h5" component="div">
-          {title}
-        </Typography>
-        <Typography variant="body2">{artist.name}</Typography>
-      </CardContent>
-      <CardActions
-        sx={{ height: 0, paddingTop: 0, alignItems: "right", width: "330px" }}
-      >
-        <IconButton
-          aria-label="add to favorites"
-          className="card-icon"
-          onClick={() => handleFavourite(id)}
-        >
-          {!favourites.includes(id) ? (
-            <FavoriteBorderOutlinedIcon />
-          ) : (
-            <FavoriteIcon sx={{ color: "#e91e63" }} />
-          )}
-        </IconButton>
-      </CardActions>
+      <div className="title_favourite">
+        <CardContent sx={{ height: "auto" }}>
+          <Typography
+            gutterBottom
+            variant="h5"
+            className="card-content"
+            component="div"
+            // sx={{ width: "200px" }}
+          >
+            {title}
+          </Typography>
+          <Typography variant="body2">{artist.name}</Typography>
+        </CardContent>
+        <CardActions sx={{}}>
+          <IconButton
+            aria-label="add to favorites"
+            className="card-icon"
+            onClick={() => handleFavourite(id)}
+          >
+            {!favourites.includes(id) ? (
+              <FavoriteBorderOutlinedIcon />
+            ) : (
+              <FavoriteIcon sx={{ color: "#e91e63" }} />
+            )}
+          </IconButton>
+        </CardActions>
+      </div>
     </Card>
   ));
 
@@ -163,7 +162,7 @@ function Home(songData: any) {
           "Loading..."
         )}
 
-        {openModal && id && (
+        {openModal && selectedCardID && (
           <Modal
             open={openModal}
             aria-labelledby="modal-modal-title"
@@ -171,7 +170,7 @@ function Home(songData: any) {
             className="song-modal"
           >
             <Box className="modal-content">
-              <img src={id.artist.picture_xl} className="modal-image" />
+              <img src={selectedCard?.album.cover_xl} className="modal-image" />
               <div className="modal-text">
                 <div className="title_favourite">
                   <Typography
@@ -179,13 +178,14 @@ function Home(songData: any) {
                     variant="h4"
                     component="h4"
                   >
-                    {id.title}
+                    {console.log(selectedCard)}
+                    {selectedCard?.title}
                   </Typography>
                   <IconButton
                     aria-label="add to favorites"
                     onClick={() => handleFavourite(id)}
                   >
-                    {!favourites.includes(id) ? (
+                    {!favourites.includes(selectedCardID) ? (
                       <FavoriteBorderOutlinedIcon />
                     ) : (
                       <FavoriteIcon sx={{ color: "#e91e63" }} />
@@ -197,20 +197,29 @@ function Home(songData: any) {
                   variant="h6"
                   component="h6"
                 >
-                  {id.album.title}
+                  {selectedCard?.album.title}
                 </Typography>
                 <span className="divider"></span>
                 <Typography className="modal-modal-description" sx={{ mt: 2 }}>
-                  Artist: <div className="album-info">{id.artist.name}</div>
+                  Artist:{" "}
+                  <div className="album-info">{selectedCard?.artist.name}</div>
                 </Typography>
                 <Typography className="modal-modal-description" sx={{ mt: 2 }}>
-                  Album: <div className="album-info">{id.album.title}</div>
+                  Album:{" "}
+                  <div className="album-info">{selectedCard?.album.title}</div>
                 </Typography>
                 <Typography className="modal-modal-description" sx={{ mt: 2 }}>
-                  Duration: <div className="album-info">{id.duration}</div>
+                  Duration: {"  "}
+                  <div className="album-info">
+                    {changeTime(selectedCard?.duration)}
+                  </div>
                 </Typography>
               </div>
-              <audio className="modal-audio" controls src={id.preview} />
+              <audio
+                className="modal-audio"
+                controls
+                src={selectedCard?.preview}
+              />
             </Box>
           </Modal>
         )}
