@@ -19,14 +19,19 @@ import * as PlaylistManagement from '../../roots/GetData';
 
 type HomeProps = {
   searchCriteria: string;
+  handleFavourite: any;
+  favourites: string[];
 };
 
-const Home: React.FunctionComponent<HomeProps> = ({ searchCriteria }) => {
+const Home: React.FunctionComponent<HomeProps> = ({
+  searchCriteria,
+  handleFavourite,
+  favourites,
+}) => {
   const [data, setData] = useState<any>(null);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [id, setID] = useState<any>(null);
   const [modalData, setModalData] = useState<any>(null);
-  const [favourites, setFavourites] = useState<string[]>([]);
   const [groupedArtistData, setGroupedArtistData] = useState<any>(null);
   const [playSong, setPlaySong] = useState<boolean>(false);
 
@@ -58,17 +63,6 @@ const Home: React.FunctionComponent<HomeProps> = ({ searchCriteria }) => {
 
     getTrackData();
   }, [openModal]);
-  const handleFavourite = (id: string) => {
-    console.log(id);
-    if (favourites.includes(id)) {
-      let temp = favourites.filter((val: string) => {
-        return val !== id;
-      });
-      setFavourites(temp);
-    } else {
-      setFavourites((prevFavourites) => [...prevFavourites, id]);
-    }
-  };
 
   const secondsToMinutes = (time: number) => {
     const minutes = Math.floor(time / 60);
@@ -78,7 +72,6 @@ const Home: React.FunctionComponent<HomeProps> = ({ searchCriteria }) => {
     };
     return str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2);
   };
-  console.log('data', data);
 
   type GroupedResult<T> = { [key: string]: T[] };
 
@@ -117,6 +110,7 @@ const Home: React.FunctionComponent<HomeProps> = ({ searchCriteria }) => {
                     key={id}
                     className="custom-card"
                     sx={{
+                      overflow: 'visible !important',
                       boxShadow: 'none',
                       backgroundColor: '#353535',
                       '&:hover': {
@@ -133,7 +127,6 @@ const Home: React.FunctionComponent<HomeProps> = ({ searchCriteria }) => {
                         size="medium"
                         sx={{ color: '#fff' }}
                         onClick={() => {
-                          console.log(id);
                           setOpenModal(true);
                           setID(id);
                         }}
@@ -222,8 +215,6 @@ const Home: React.FunctionComponent<HomeProps> = ({ searchCriteria }) => {
               <div className="title_favourite">
                 <Typography
                   id="modal-modal-title"
-                  // variant="h4"
-                  // component="h4"
                   sx={{
                     fontSize: '32px',
                     fontWeight: 700,
@@ -288,6 +279,7 @@ const Home: React.FunctionComponent<HomeProps> = ({ searchCriteria }) => {
           </Box>
         </Modal>
       )}
+      <span className="divider"></span>
     </div>
   );
 };

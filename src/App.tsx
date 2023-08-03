@@ -3,15 +3,28 @@ import './App.css';
 import Home from './pages/Home/Home';
 import Favourites from './pages/Favourites/Favourites';
 import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
-import { Input, Paper } from '@mui/material';
+import { Input, Paper, Snackbar } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function App() {
   const [query, setQuery] = useState<string>('');
   const [searchCriteria, setSearchCriteria] = useState<string>('axel f');
+  const [favourites, setFavourites] = useState<string[]>([]);
+  const [openToast, setOpenToast] = useState<boolean>(false);
+  const handleFavourite = (id: string) => {
+    if (favourites.includes(id)) {
+      let temp = favourites.filter((val: string) => {
+        return val !== id;
+      });
+      setOpenToast(true);
+      setFavourites(temp);
+    } else {
+      setFavourites((prevFavourites) => [...prevFavourites, id]);
+    }
+  };
   useEffect(() => {
     const timeOutId = setTimeout(
-      () => setSearchCriteria(query === '' ? 'artist' : query),
+      () => setSearchCriteria(query === '' ? 'axel f' : query),
       500
     );
     return () => clearTimeout(timeOutId);
@@ -92,9 +105,34 @@ export default function App() {
             </Paper>
           </div>
         </div>
+        <Snackbar
+          open={openToast}
+          autoHideDuration={6000}
+          message={'Removed from your Favourited Songs'}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          onClose={() => setOpenToast(false)}
+          sx={{ mt: '6rem' }}
+        />
         <Routes>
-          <Route path="/" element={<Home searchCriteria={searchCriteria} />} />
-          <Route path="favourites" element={<Favourites />} />
+          <Route
+            path="/"
+            element={
+              <Home
+                searchCriteria={searchCriteria}
+                handleFavourite={handleFavourite}
+                favourites={favourites}
+              />
+            }
+          />
+          <Route
+            path="favourites"
+            element={
+              <Favourites
+                handleFavourite={handleFavourite}
+                favourites={favourites}
+              />
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,0 +1,112 @@
+.modal-content {
+  /* position: absolute; */
+  margin: 0 auto;
+  width: 410px;
+  background-color: #353535;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+.modal-image {
+  height: 50%;
+  margin: 40px;
+}
+.modal-text {
+  width: 90%;
+  color: white;
+  margin-left: 1em;
+}
+
+.modal-favourites-button {
+  margin: 3vh 0 0 0 !important;
+}
+
+.modal-audio {
+  margin: 3vh 0 0 3vw !important;
+}
+.custom-card {
+  color: white !important;
+  border-radius: 16px !important;
+  padding: 12px !important;
+}
+.learn-more-button {
+  background-color: #eb0573;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -35%);
+  display: none;
+}
+.play-song-button {
+  display: flex;
+  width: 330px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background-color: #eb0573;
+  align-self: center;
+  margin-bottom: 48px;
+  margin-top: 24px;
+  /* margin: 10em 6em -3em; */
+  /* position: absolute; */
+}
+.modal-modal-description {
+  display: flex;
+  flex-direction: row;
+  color: #9a9a9a;
+}
+.modal-album-title {
+  color: #9a9a9a;
+}
+.album-info {
+  /* right: 0; */
+  /* position: fixed; */
+  margin-left: auto;
+}
+.divider {
+  display: flex;
+  border-bottom: 1px solid #9a9a9a;
+  margin: 5px 0;
+}
+.title_favourite {
+  display: flex;
+  justify-content: space-between;
+}
+.card-content {
+  display: flex;
+}
+
+.card-title {
+  font-weight: 700 !important;
+  font-size: 32px !important;
+  line-height: 47.42px !important;
+  text-transform: uppercase !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  width: 300px !important;
+}
+
+.card-album-title {
+  font-family: Roboto;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  line-height: 18.75px !important;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.artist-title {
+  color: #fff !important;
+  font-family: Oswald !important;
+  font-size: 48px !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: normal !important;
+  text-transform: uppercase !important;
+  margin-left: 2rem !important;
+}
+.output {
+  background-color: #353535;
+}
