@@ -74,3 +74,28 @@
 .css-v4u5dn-MuiInputBase-root-MuiInput-root:after {
   border-bottom: 2px solid #ffffff !important;
 }
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 97%;
+  margin: 15px;
+}
+.footer-text {
+  color: #fff;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.title-footer {
+  text-transform: capitalize;
+  font-family: Oswald, Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-right: 1em;
+  color: white;
+  flex-direction: column;
+  display: flex;
+}

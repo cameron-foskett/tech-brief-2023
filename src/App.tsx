@@ -107,7 +107,7 @@ export default function App() {
         </div>
         <Snackbar
           open={openToast}
-          autoHideDuration={6000}
+          autoHideDuration={2000}
           message={'Removed from your Favourited Songs'}
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           onClose={() => setOpenToast(false)}
@@ -135,6 +135,14 @@ export default function App() {
           />
         </Routes>
       </BrowserRouter>
+      <span className="divider"></span>
+      <div className="footer">
+        <div className="title-footer">
+          <span>MOOOSIC</span>
+          <span>MADNESS</span>
+        </div>
+        <div className="footer-text">2023 MOOSIC MADNESS</div>
+      </div>
     </div>
   );
 }

@@ -279,7 +279,6 @@ const Home: React.FunctionComponent<HomeProps> = ({
           </Box>
         </Modal>
       )}
-      <span className="divider"></span>
     </div>
   );
 };
