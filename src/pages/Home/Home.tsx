@@ -15,6 +15,7 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import React, { useState, useEffect } from "react";
 import "./Home.css";
 import * as PlaylistManagement from "../../roots/GetData";
+import { spread } from "axios";
 
 function Home(songData: any) {
   const [data, setData] = useState<any>(null);
@@ -25,9 +26,25 @@ function Home(songData: any) {
     {}
   );
   const [selectedCardID, setSelectedCardID] = useState<string | null>(null);
-  const selectedCard = data?.data.find(
-    (item: any) => item.id === selectedCardID
-  );
+
+  const groupByArtist = (data: any) => {
+    let artistArray: any = [];
+    let artistObject: any = {};
+    let spreadData: any = data?.data;
+    for (let i = 0; i < 25; i++) {
+      let song: any = i;
+      let artist: any = spreadData[i].artist.name;
+      if (!artistArray.includes(artist)) {
+        artistArray.push(artist);
+        let artistID = artistArray.indexOf(artist);
+        artistObject[artistID] = { [i]: spreadData[i] };
+      } else {
+        let artistID = artistArray.indexOf(artist);
+        artistObject[artistID][song] = spreadData[i];
+      }
+    }
+    return artistObject;
+  };
 
   useEffect(() => {
     const getPlaylistData = async () => {
@@ -36,7 +53,14 @@ function Home(songData: any) {
           songData.songData
         );
         const waitSongData = await getSongData.json();
+        // setData(groupByArtist(waitSongData));
         setData(waitSongData);
+        // console.log(
+        //   "here:",
+        //   groupByArtist(waitSongData),
+        //   "compare:",
+        //   waitSongData
+        // );
       } catch (e) {
         console.log(e);
       }
@@ -79,77 +103,83 @@ function Home(songData: any) {
     return result;
   };
 
-  const listItems = data?.data.map(({ id, artist, album, title }: any) => (
-    <Card
-      key={id}
-      className="custom-card"
-      onMouseEnter={() => {
-        setHoverOnImage((prevState) => ({ ...prevState, [id]: true }));
-      }}
-      onMouseLeave={() => {
-        setHoverOnImage((prevState) => ({ ...prevState, [id]: false }));
-      }}
-      sx={{
-        maxHeight: 480,
-        width: "354px",
-        boxShadow: "none",
-        padding: "12px",
-        backgroundColor: `${
-          hoverOnImage[id] ? "rgba(225,225,225,0.1) !important" : "#353535"
-        }`,
-      }}
-    >
-      <div className="learn-more-button">
-        <Button
-          size="medium"
-          sx={{
-            color: "#fff",
-            display: `${hoverOnImage[id] ? "show" : "none"}`,
-          }}
-          onClick={() => {
-            setSelectedCardID(id);
-            setOpenModal(true);
-          }}
-        >
-          Learn More
-        </Button>
-      </div>
-      <CardMedia
-        sx={{ height: "330px", width: "auto", borderRadius: "16px" }}
-        component="img"
-        alt={"Album Cover for " + album.title}
-        image={album.cover_xl}
-        title={artist.name}
-      />
-      <div className="title_favourite">
-        <CardContent sx={{ height: "auto" }}>
-          <Typography
-            gutterBottom
-            variant="h5"
-            className="card-content"
-            component="div"
-            // sx={{ width: "200px" }}
+  const selectedCard = data?.data.find(
+    (item: any) => item.id === selectedCardID
+  );
+
+  const listItems = data?.data.map(
+    ({ id, artist, album, title_short }: any) => (
+      <Card
+        key={id}
+        className="custom-card"
+        onMouseEnter={() => {
+          setHoverOnImage((prevState) => ({ ...prevState, [id]: true }));
+        }}
+        onMouseLeave={() => {
+          setHoverOnImage((prevState) => ({ ...prevState, [id]: false }));
+        }}
+        sx={{
+          maxHeight: 480,
+          width: "354px",
+          boxShadow: "none",
+          padding: "12px",
+          backgroundColor: `${
+            hoverOnImage[id] ? "rgba(225,225,225,0.1) !important" : "#353535"
+          }`,
+        }}
+      >
+        <div className="learn-more-button">
+          <Button
+            size="medium"
+            sx={{
+              color: "#fff",
+              display: `${hoverOnImage[id] ? "show" : "none"}`,
+            }}
+            onClick={() => {
+              setSelectedCardID(id);
+              setOpenModal(true);
+            }}
           >
-            {title}
-          </Typography>
-          <Typography variant="body2">{artist.name}</Typography>
-        </CardContent>
-        <CardActions sx={{}}>
-          <IconButton
-            aria-label="add to favorites"
-            className="card-icon"
-            onClick={() => handleFavourite(id)}
-          >
-            {!favourites.includes(id) ? (
-              <FavoriteBorderOutlinedIcon />
-            ) : (
-              <FavoriteIcon sx={{ color: "#e91e63" }} />
-            )}
-          </IconButton>
-        </CardActions>
-      </div>
-    </Card>
-  ));
+            Learn More
+          </Button>
+        </div>
+        <CardMedia
+          sx={{ height: "330px", width: "auto", borderRadius: "16px" }}
+          component="img"
+          alt={"Album Cover for " + album.title}
+          image={album.cover_xl}
+          title={artist.name}
+        />
+        <div className="title_favourite">
+          <CardContent sx={{ height: "auto" }}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              className="card-content"
+              component="div"
+              // sx={{ width: "200px" }}
+            >
+              {title_short.toUpperCase()}
+            </Typography>
+            <Typography variant="body2">{artist.name}</Typography>
+          </CardContent>
+          <CardActions sx={{}}>
+            <IconButton
+              aria-label="add to favorites"
+              className="card-icon"
+              onClick={() => handleFavourite(id)}
+            >
+              {!favourites.includes(id) ? (
+                <FavoriteBorderOutlinedIcon />
+              ) : (
+                <FavoriteIcon sx={{ color: "#e91e63" }} />
+              )}
+            </IconButton>
+          </CardActions>
+        </div>
+      </Card>
+    )
+  );
 
   return (
     <>
@@ -179,7 +209,7 @@ function Home(songData: any) {
                     component="h4"
                   >
                     {console.log(selectedCard)}
-                    {selectedCard?.title}
+                    {selectedCard?.title.toUpperCase()}
                   </Typography>
                   <IconButton
                     aria-label="add to favorites"
