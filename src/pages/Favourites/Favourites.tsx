@@ -9,6 +9,7 @@ import {
   IconButton,
   Box,
   CircularProgress,
+  Grow,
 } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CloseIcon from '@mui/icons-material/Close';
@@ -16,6 +17,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import React, { useState, useEffect, useMemo, useReducer } from 'react';
 import './Favourites.css';
 import * as DataManagement from '../../roots/GetData';
+import { Link } from 'react-router-dom';
 
 type FavouritesProps = {
   handleFavourite: any;
@@ -88,79 +90,81 @@ const Favourites: React.FunctionComponent<FavouritesProps> = ({
                 );
                 if (!artist || !album || !title) return null;
                 return (
-                  <Card
-                    key={id}
-                    className="custom-card"
-                    sx={{
-                      boxShadow: 'none',
-                      backgroundColor: '#353535',
-                      overflow: 'visible !important',
-                      display: favourites.includes(id) ? 'block' : 'false',
-                      '&:hover': {
-                        backgroundColor: 'rgba(255,255,255,0.1)',
-                        backdropFilter: 'blur(10px)',
-                      },
-                      '&:hover .learn-more-button': {
-                        display: 'block',
-                      },
-                    }}
-                  >
-                    <div className="learn-more-button">
-                      <Button
-                        size="medium"
-                        sx={{ color: '#fff' }}
-                        onClick={() => {
-                          setOpenModal(true);
-                          setID(id);
-                        }}
-                      >
-                        Learn More
-                      </Button>
-                    </div>
-                    <CardMedia
+                  <Grow key={id} in={favourites.includes(id)}>
+                    <Card
+                      key={id}
+                      className="custom-card"
                       sx={{
-                        height: '330px',
-                        width: '330px',
-                        borderRadius: '16px',
-                        zIndex: 0,
-                        margin: 'auto',
-                      }}
-                      image={album.cover_big}
-                      title={artist.name}
-                      className="album-cover"
-                    />
-                    <CardContent
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        padding: 0,
+                        boxShadow: 'none',
+                        backgroundColor: '#353535',
+                        overflow: 'visible !important',
+                        display: favourites.includes(id) ? 'block' : 'false',
+                        '&:hover': {
+                          backgroundColor: 'rgba(255,255,255,0.1)',
+                          backdropFilter: 'blur(10px)',
+                        },
+                        '&:hover .learn-more-button': {
+                          display: 'block',
+                        },
                       }}
                     >
-                      <CardContent sx={{ height: 30 }}>
-                        <Typography gutterBottom className="card-title">
-                          {title}
-                        </Typography>
-                        <Typography className="card-album-title">
-                          {album.title}
-                        </Typography>
-                      </CardContent>
-                      <CardActions sx={{ height: 105, paddingTop: 3 }}>
-                        <IconButton
-                          aria-label="add to favorites"
-                          className="card-icon"
+                      <div className="learn-more-button">
+                        <Button
+                          size="medium"
+                          sx={{ color: '#fff' }}
                           onClick={() => {
-                            handleFavourite(id);
+                            setOpenModal(true);
+                            setID(id);
                           }}
                         >
-                          {!favourites.includes(id) ? (
-                            <FavoriteBorderOutlinedIcon />
-                          ) : (
-                            <FavoriteIcon sx={{ color: '#e91e63' }} />
-                          )}
-                        </IconButton>
-                      </CardActions>
-                    </CardContent>
-                  </Card>
+                          Learn More
+                        </Button>
+                      </div>
+                      <CardMedia
+                        sx={{
+                          height: '330px',
+                          width: '330px',
+                          borderRadius: '16px',
+                          zIndex: 0,
+                          margin: 'auto',
+                        }}
+                        image={album.cover_big}
+                        title={artist.name}
+                        className="album-cover"
+                      />
+                      <CardContent
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          padding: 0,
+                        }}
+                      >
+                        <CardContent sx={{ height: 30 }}>
+                          <Typography gutterBottom className="card-title">
+                            {title}
+                          </Typography>
+                          <Typography className="card-album-title">
+                            {album.title}
+                          </Typography>
+                        </CardContent>
+                        <CardActions sx={{ height: 105, paddingTop: 3 }}>
+                          <IconButton
+                            aria-label="add to favorites"
+                            className="card-icon"
+                            onClick={() => {
+                              handleFavourite(id);
+                            }}
+                          >
+                            {!favourites.includes(id) ? (
+                              <FavoriteBorderOutlinedIcon />
+                            ) : (
+                              <FavoriteIcon sx={{ color: '#e91e63' }} />
+                            )}
+                          </IconButton>
+                        </CardActions>
+                      </CardContent>
+                    </Card>
+                  </Grow>
                 );
               })}
               {openModal && id && modalData && (
@@ -283,7 +287,17 @@ const Favourites: React.FunctionComponent<FavouritesProps> = ({
         ) : (
           <div className="full-page">
             {favourites.length === 0 ? (
-              <Typography>No favourites. Add a new one from Home</Typography>
+              <Typography
+                sx={{
+                  color: 'white',
+                  ml: '1rem',
+                }}
+              >
+                No favourites. Add a new one from{' '}
+                <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+                  Home
+                </Link>
+              </Typography>
             ) : (
               <CircularProgress
                 sx={{

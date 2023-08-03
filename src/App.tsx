@@ -5,12 +5,14 @@ import Favourites from './pages/Favourites/Favourites';
 import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
 import { Input, Paper, Snackbar } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { BorderColor } from '@mui/icons-material';
 
 export default function App() {
   const [query, setQuery] = useState<string>('');
   const [searchCriteria, setSearchCriteria] = useState<string>('axel f');
   const [favourites, setFavourites] = useState<string[]>([]);
   const [openToast, setOpenToast] = useState<boolean>(false);
+  const [searchFocus, setSearchFocus] = useState<boolean>(false);
   const handleFavourite = (id: string) => {
     if (favourites.includes(id)) {
       let temp = favourites.filter((val: string) => {
@@ -66,7 +68,13 @@ export default function App() {
               Favourites
             </NavLink>
           </nav>
-          <div className="searchBar">
+          <div
+            className="searchBar"
+            style={{
+              borderColor: 'white',
+              borderWidth: !searchFocus ? 0 : '1px',
+            }}
+          >
             <Paper
               component="form"
               sx={{
@@ -77,7 +85,10 @@ export default function App() {
                 width: '306px',
                 borderRadius: '8px',
                 backgroundColor: 'rgba(255, 255, 255, 0.10)',
+                border: !searchFocus ? 0 : '1px solid #FFF',
               }}
+              onFocus={() => setSearchFocus(true)}
+              onBlur={() => setSearchFocus(false)}
             >
               <Input
                 sx={{
@@ -90,14 +101,14 @@ export default function App() {
                   },
                 }}
                 disableUnderline
-                placeholder="Search"
+                placeholder={!searchFocus ? 'Search' : ''}
                 inputProps={{ 'aria-label': 'search' }}
                 onChange={(e) => setQuery(e.currentTarget.value)}
               />
 
               <SearchIcon
                 sx={{
-                  fillOpacity: 0.3,
+                  fillOpacity: !searchFocus ? 0.3 : 1,
                   fill: 'var(--transparent, #FFF)',
                   backgroundBlendMode: 'multiply',
                 }}
