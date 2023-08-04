@@ -146,7 +146,6 @@ export default function App() {
           />
         </Routes>
       </BrowserRouter>
-      <span className="divider"></span>
       <div className="footer">
         <div className="title-footer">
           <span>MOOOSIC</span>

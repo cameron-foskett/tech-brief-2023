@@ -163,7 +163,7 @@ const Home: React.FunctionComponent<HomeProps> = ({
                             {album.title}
                           </Typography>
                         </CardContent>
-                        <CardActions sx={{ height: 105, paddingTop: 3 }}>
+                        <CardActions sx={{ height: 35, paddingTop: 3 }}>
                           <IconButton
                             aria-label="add to favorites"
                             className="card-icon"
@@ -194,6 +194,11 @@ const Home: React.FunctionComponent<HomeProps> = ({
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
           className="song-modal"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
         >
           <Box className="modal-content">
             <IconButton
@@ -202,6 +207,9 @@ const Home: React.FunctionComponent<HomeProps> = ({
                 setModalData(null);
                 setOpenModal(false);
                 setPlaySong(false);
+              }}
+              sx={{
+                padding: 0,
               }}
             >
               <CloseIcon

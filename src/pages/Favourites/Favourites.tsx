@@ -126,7 +126,7 @@ const Favourites: React.FunctionComponent<FavouritesProps> = ({
                           width: '330px',
                           borderRadius: '16px',
                           zIndex: 0,
-                          margin: 'auto',
+                          // margin: 'auto',
                         }}
                         image={album.cover_big}
                         title={artist.name}
@@ -147,7 +147,7 @@ const Favourites: React.FunctionComponent<FavouritesProps> = ({
                             {album.title}
                           </Typography>
                         </CardContent>
-                        <CardActions sx={{ height: 105, paddingTop: 3 }}>
+                        <CardActions sx={{ height: 35, paddingTop: 3 }}>
                           <IconButton
                             aria-label="add to favorites"
                             className="card-icon"
@@ -173,6 +173,18 @@ const Favourites: React.FunctionComponent<FavouritesProps> = ({
                   aria-labelledby="modal-modal-title"
                   aria-describedby="modal-modal-description"
                   className="song-modal"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  slotProps={{
+                    backdrop: {
+                      sx: {
+                        backgroundColor: 'rgba(0,0,0,0.8)',
+                      },
+                    },
+                  }}
                 >
                   <Box className="modal-content">
                     <IconButton
