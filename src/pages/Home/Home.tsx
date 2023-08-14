@@ -32,7 +32,6 @@ function Home(songData: any) {
     let artistObject: any = {};
     let spreadData: any = data?.data;
     for (let i = 0; i < 25; i++) {
-      let song: any = i;
       let artist: any = spreadData[i].artist.name;
       if (!artistArray.includes(artist)) {
         artistArray.push(artist);
@@ -40,7 +39,7 @@ function Home(songData: any) {
         artistObject[artistID] = { [i]: spreadData[i] };
       } else {
         let artistID = artistArray.indexOf(artist);
-        artistObject[artistID][song] = spreadData[i];
+        artistObject[artistID][i] = spreadData[i];
       }
     }
     return artistObject;
